@@ -1,0 +1,7 @@
+.DS_Store
+*.pyc
+*.db
+config.py
+notes/
+*.swp
+.python-version
