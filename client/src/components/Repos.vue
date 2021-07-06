@@ -16,9 +16,9 @@
           </thead>
           <tbody>
             <tr
-              v-for="(repository, index) in repositories"
+              v-for="(repository, id) in repositories"
               @click="navigateToDetails(repository)"
-              :key="index"
+              :key="id"
             >
               <td>{{ repository.name }}</td>
               <td>{{ repository.num_stars }}</td>
@@ -32,19 +32,16 @@
 
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex';
 
 export default {
-  data() {
-    return {
-      repositories: [],
-    };
-  },
+  computed: mapState(['repositories']),
   methods: {
     getRepositories() {
       const path = 'http://localhost:5000/repo/';
       axios.get(path)
         .then((res) => {
-          this.repositories = res.data.data;
+          this.$store.commit('setRepositories', res.data.data);
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -54,13 +51,14 @@ export default {
     navigateToDetails(repository) {
       this.$router.push({
         name: 'RepoDetails',
-        params: { id: repository.id, preloadedRepository: repository },
-        // props: { repository },
+        params: { id: repository.id },
       });
     },
   },
   created() {
-    this.getRepositories();
+    if (!this.repositories || Object.keys(this.repositories).length < 30) {
+      this.getRepositories();
+    }
   },
 };
 </script>

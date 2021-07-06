@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <a href="#" @click="$router.go(-1)">Go back</a>
+    <a href="#" @click="$router.push({'name':'Repos'})">Go back</a>
     <h1>{{ repository.name }}</h1>
     <ul>
       <li>Repository id: {{ repository.github_id }}</li>
@@ -15,20 +15,28 @@
 
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex';
 
 export default {
-  props: ['id', 'preloadedRepository'],
+  props: ['id'],
+  /*
   data() {
     return {
       repository: {},
     };
   },
+  */
+  computed: mapState({
+    repository(state) {
+      return (state.repositories) ? state.repositories[this.id] : null;
+    },
+  }),
   methods: {
     getRepository() {
       const path = `http://localhost:5000/repo/${this.id}`;
       axios.get(path)
         .then((res) => {
-          this.repository = res.data.data;
+          this.$store.commit('setRepository', res.data.data);
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -37,13 +45,8 @@ export default {
     },
   },
   created() {
-    if (!this.preloadedRepository) {
-      // If user loads details page directly, we don't receive a repository
-      // prop and we need to look it up the repo via AJAX
+    if (this.repository == null) {
       this.getRepository();
-    } else {
-      // Otherwise we got repository prop from the previous page - just use that
-      this.repository = this.preloadedRepository;
     }
   },
 };
