@@ -8,12 +8,11 @@ flask = "*"
 marshmallow-sqlalchemy = "*"
 flask-sqlalchemy = "*"
 flask-marshmallow = "*"
-flask-cors = "*"
-gunicorn = "*"
 requests = "*"
 
 [dev-packages]
 flake8 = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.9.4"

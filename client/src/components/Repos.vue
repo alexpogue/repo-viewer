@@ -62,6 +62,7 @@ export default {
     },
     refreshDatabase() {
       const path = '/api/admin/refresh_repo_db';
+      this.refreshStatusMessage = 'Working...';
       axios.post(path, {})
         .then((res) => {
           this.refreshStatusMessage = res.data.data;
