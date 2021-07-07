@@ -1,15 +1,17 @@
 <template>
   <div class="container">
-    <a href="#" @click="$router.push({'name':'Repos'})">Go back</a>
-    <h1>{{ repository.name }}</h1>
-    <ul>
-      <li>Repository id: {{ repository.github_id }}</li>
-      <li>URL: {{ repository.url }}</li>
-      <li>Created date: {{ repository.created_date }}</li>
-      <li>Last push date: {{ repository.last_push_date }}</li>
-      <li>Description: {{ repository.description }}</li>
-      <li>Number of stars: {{ repository.num_stars }}</li>
-    </ul>
+    <router-link to="/">Go back</router-link>
+    <div v-if="!isLoading">
+      <h1>{{ repository.name }}</h1>
+      <ul>
+        <li>Repository id: {{ repository.github_id }}</li>
+        <li>URL: {{ repository.url }}</li>
+        <li>Created date: {{ repository.created_date }}</li>
+        <li>Last push date: {{ repository.last_push_date }}</li>
+        <li>Description: {{ repository.description }}</li>
+        <li>Number of stars: {{ repository.num_stars }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -19,13 +21,11 @@ import { mapState } from 'vuex';
 
 export default {
   props: ['id'],
-  /*
   data() {
     return {
-      repository: {},
+      isLoading: true,
     };
   },
-  */
   computed: mapState({
     repository(state) {
       return (state.repositories) ? state.repositories[this.id] : null;
@@ -33,10 +33,11 @@ export default {
   }),
   methods: {
     getRepository() {
-      const path = `http://localhost:5000/repo/${this.id}`;
+      const path = `/api/repo/${this.id}`;
       axios.get(path)
         .then((res) => {
           this.$store.commit('setRepository', res.data.data);
+          this.isLoading = false;
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -47,6 +48,8 @@ export default {
   created() {
     if (this.repository == null) {
       this.getRepository();
+    } else {
+      this.isLoading = false;
     }
   },
 };

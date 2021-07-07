@@ -5,3 +5,7 @@ config.py
 notes/
 *.swp
 .python-version
+
+server/requirements.txt
+server/repo_viewer/static/
+server/repo_viewer/templates/
