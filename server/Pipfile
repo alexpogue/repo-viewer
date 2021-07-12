@@ -9,10 +9,10 @@ marshmallow-sqlalchemy = "*"
 flask-sqlalchemy = "*"
 flask-marshmallow = "*"
 requests = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 flake8 = "*"
-flask-cors = "*"
 
 [requires]
 python_version = "3.9.4"

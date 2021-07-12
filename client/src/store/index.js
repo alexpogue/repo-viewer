@@ -7,6 +7,7 @@ export default new Vuex.Store(
   {
     state: {
       repositories: null,
+      loggedInUserToken: null,
     },
     mutations: {
       setRepositories(state, newRepositories) {
@@ -18,6 +19,9 @@ export default new Vuex.Store(
           state.repositories = {};
         }
         state.repositories[repository.id] = repository;
+      },
+      setLoggedInUserToken(state, loggedInUserToken) {
+        state.loggedInUserToken = loggedInUserToken;
       },
     },
   },

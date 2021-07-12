@@ -39,3 +39,13 @@ def convert_fields_to_date(obj, date_fields):
             date = getattr(obj, field)
             if isinstance(date, str):
                 setattr(obj, field, python_date_from_string(date))
+
+
+def get_github_user_request_headers(user_token):
+    if user_token is None:
+        return None
+
+    headers = {"Authorization": "Token {}".format(user_token),
+               "Accept": "application/vnd.github.v3+json"}
+
+    return headers

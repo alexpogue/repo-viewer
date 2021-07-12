@@ -6,19 +6,9 @@ let command = argv['_'][0];
 switch(command) {
   case 'build':
     config = {
-      publicPath: '/static/gen',
-      assetsDir: './',
       outputDir: '../server/repo_viewer/static/gen',
-      pages: {
-        app: {
-          entry: 'src/main.js',
-          template: 'public/index.html',
-          filename:
-            path.resolve(
-              '../server/repo_viewer/templates/gen', 'index.html'),
-          title: 'Paracosm Home',
-        }
-      }
+      assetsDir: './',                             // relative to outputDir
+      indexPath: '../../templates/gen/index.html', // relative to outputDir
     };
     break;
   case 'serve':

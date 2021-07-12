@@ -1,5 +1,4 @@
 import repo_viewer
-import os
 
 app = repo_viewer.create_app()
 
