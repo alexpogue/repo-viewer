@@ -1,4 +1,3 @@
-import json
 import datetime
 import requests
 from flask import Blueprint, jsonify, current_app as app, request
@@ -45,7 +44,7 @@ def refresh_repositories_database():
         if 'API rate limit exceeded' in reason:
             return_code = 429
         return jsonify({'data': 'fail', 'reason': reason}), return_code
-        
+
 
 @admin_blueprint.route('/github_client_id', methods=['GET'])
 def get_github_client_id():
